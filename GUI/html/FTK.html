@@ -1,0 +1,2410 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>FTK</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-09-07"><meta name="DC.source" content="FTK.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> varargout = FTK(varargin)
+<span class="comment">% FTK MATLAB code for FTK.fig</span>
+<span class="comment">%      FTK, by itself, creates a new FTK or raises the existing</span>
+<span class="comment">%      singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      H = FTK returns the handle to a new FTK or the handle to</span>
+<span class="comment">%      the existing singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      FTK('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+<span class="comment">%      function named CALLBACK in FTK.M with the given input arguments.</span>
+<span class="comment">%</span>
+<span class="comment">%      FTK('Property','Value',...) creates a new FTK or raises the</span>
+<span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+<span class="comment">%      applied to the GUI before FTK_OpeningFcn gets called.  An</span>
+<span class="comment">%      unrecognized property name or invalid value makes property application</span>
+<span class="comment">%      stop.  All inputs are passed to FTK_OpeningFcn via varargin.</span>
+<span class="comment">%</span>
+<span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one</span>
+<span class="comment">%      instance to run (singleton)".</span>
+<span class="comment">%</span>
+<span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+
+<span class="comment">% Edit the above text to modify the response to help FTK</span>
+
+<span class="comment">% Last Modified by GUIDE v2.5 17-Jul-2016 16:16:51</span>
+
+<span class="comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton = 1;
+gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+                   <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+                   <span class="string">'gui_OpeningFcn'</span>, @FTK_OpeningFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_OutputFcn'</span>,  @FTK_OutputFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+                   <span class="string">'gui_Callback'</span>,   []);
+<span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">else</span>
+    gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">end</span>
+<span class="comment">% End initialization code - DO NOT EDIT</span>
+
+<span class="comment">%feature('DefaultCharacterSet', 'UTF8')</span>
+<span class="comment">% --- Executes just before FTK is made visible.</span>
+<span class="keyword">function</span> FTK_OpeningFcn(hObject, eventdata, handles, varargin)
+<span class="comment">% This function has no output args, see OutputFcn.</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+<span class="comment">% varargin   command line arguments to FTK (see VARARGIN)</span>
+
+<span class="comment">% Choose default command line output for FTK</span>
+
+
+
+<span class="comment">%handles.Fmip=num2str(getappdata(0,'Fmip'))</span>
+handles.output = hObject;
+set(handles.Counter,<span class="string">'String'</span>,0)<span class="comment">%handles za brojac</span>
+
+<span class="comment">% Update handles structure</span>
+guidata(hObject, handles);
+
+<span class="comment">%FTK_Rac</span>
+
+<span class="comment">%set(handles.Gui_FTK, 'units', 'normalized', 'position', [0.05 0.15 0.9 0.8])</span>
+
+
+
+
+
+setappdata(0,<span class="string">'FTK'</span>, gcf);
+setappdata(gcf, <span class="string">'FTK_Rac'</span>, @FTK_Rac);
+
+
+<span class="comment">% UIWAIT makes FTK wait for user response (see UIRESUME)</span>
+<span class="comment">% uiwait(handles.Gui_FTK);</span>
+
+
+<span class="comment">% --- Outputs from this function are returned to the command line.</span>
+<span class="keyword">function</span> varargout = FTK_OutputFcn(hObject, eventdata, handles)
+<span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get default command line output from handles structure</span>
+varargout{1} = handles.output;
+
+
+
+<span class="keyword">function</span> pmax_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to pmax (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of pmax as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of pmax as a double</span>
+
+p_hmax=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'p_hmax'</span>,p_hmax);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> pmax_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to pmax (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> eta_m_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to eta_m (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of eta_m as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of eta_m as a double</span>
+
+eta_m=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'eta_m'</span>,eta_m);
+
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> eta_m_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to eta_m (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> eta_h_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to eta_h (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of eta_h as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of eta_h as a double</span>
+eta_h=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'eta_h'</span>,eta_h);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> eta_h_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to eta_h (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> r_srp_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to r_srp (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of r_srp as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of r_srp as a double</span>
+r_srp_ul=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'r_srp_ul'</span>,r_srp_ul);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> r_srp_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to r_srp (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> r_srz_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to r_srz (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of r_srz as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of r_srz as a double</span>
+r_srz_ul=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'r_srz_ul'</span>,r_srz_ul);
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> r_srz_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to r_srz (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> C_p_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to C_p (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of C_p as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of C_p as a double</span>
+
+C_p=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_p'</span>,C_p);
+
+
+
+
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> C_p_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to C_p (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> C_z_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to C_z (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of C_z as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of C_z as a double</span>
+
+C_z=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_z'</span>,C_z);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> C_z_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to C_z (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> FTK_Rac
+</pre><pre class="codeinput"><span class="comment">%Odredjivanje ukupnih sila i momenata</span>
+<span class="comment">%==========================================================================</span>
+<span class="comment">%%Velicine</span>
+<span class="comment">%==========================================================================</span>
+<span class="comment">%F_uk         [N]     Ukupna sila kocenja</span>
+<span class="comment">%rd           [m]     Dinamicki poluprecnik trenja</span>
+<span class="comment">%F_kpo        [N]     Sila kocenja na prednjoj osovini u opterecenom stanju</span>
+<span class="comment">%F_kzo        [N]     Sila kocenja na zadnjoj osovini u opterecenom stanju</span>
+<span class="comment">%F_kpto       [N]     Sila po tocku na predjoj osovini u opterecenom stanju</span>
+<span class="comment">%F_zpto       [N]     Sila po tocku na zadnjoj osovini u opterecenom stanju</span>
+<span class="comment">%M_kpto       [Nm]    Moment kocenja po tocku na prednjoj osovini u</span>
+<span class="comment">%                     opterecenom stanju</span>
+<span class="comment">%M_zpto       [Nm]    Moment kocenja po tocku na zadnjoj osovini u</span>
+<span class="comment">%                     opterecenom stanju.</span>
+<span class="comment">%r_srp        [m]     Srednji poluprecnik trenja prednje</span>
+<span class="comment">%                     kocnice(0.25-0.4rd)</span>
+<span class="comment">%C_p          [/]     Karakteristika prednje kocnice</span>
+<span class="comment">%r_srz        [m]     Srednji poluprecnik trenja zadnje kocnice(0.25-0.4rd)</span>
+<span class="comment">%C_z          [/]     Karakteristika zadnje kocnice</span>
+<span class="comment">%Fmip        [N]     Potrebna sila trenja na prednjoj osovini</span>
+<span class="comment">%Fmiz        [N]     Potrebna sila trenja na zadnjoj osovini</span>
+<span class="comment">%eta_m        [/]     Mehanicki stepen korisnosti (0.5-0.9)</span>
+<span class="comment">%p_hmax       [MPa]   Najveci neregulisani pritisak u HPM-u (6-10(12)[MPa])</span>
+<span class="comment">%A_kp         [m^2]   Potrebna povrsina poprecnog preseka klipa kocnog cil.</span>
+<span class="comment">%A_kz         [m^2]   Potrebna povrsina poprecnog preseka klipa kocnog cil.</span>
+<span class="comment">%eta_h        [/]     Hidraulicki stepen korisnosti (0.9)</span>
+<span class="comment">%d_kcp        [m]     Precnik klipa kocnog cilindra prednjih kocnica</span>
+<span class="comment">%d_kcz        [m]     Precnik klipa kocnog cilindra zadnjih kocnica</span>
+<span class="comment">%==========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%Funkcija za unos podataka----</span>
+<span class="comment">% koristi se naredba 'input' za unos preko komandne linije</span>
+<span class="comment">% opcija 's' se odnosi na to da izlazni parametar bude string</span>
+<span class="comment">% zatim se koristi komanda 'str2num' za pretvaranje stringa u numericki</span>
+<span class="comment">% zapis</span>
+<span class="comment">%Primer---- InputStr_N=input('Unesi broj stepeni prenosa N:  ','s');</span>
+<span class="comment">% N = str2num(InputStr_N);</span>
+<span class="comment">%==========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%Ulazne Velicine</span>
+<span class="comment">%==========================================================================</span>
+F_ku=getappdata(0,<span class="string">'F_ku'</span>);
+R=getappdata(0,<span class="string">'R'</span>);
+rd=getappdata(0,<span class="string">'r_d'</span>);
+eta_m=getappdata(0,<span class="string">'eta_m'</span>);
+eta_h=getappdata(0,<span class="string">'eta_h'</span>);
+p_hmax=getappdata(0,<span class="string">'p_hmax'</span>).*(10.^6);<span class="comment">%[Pa]</span>
+r_srp=getappdata(0,<span class="string">'r_srp_ul'</span>);
+setappdata(0,<span class="string">'r_srp'</span>,r_srp)
+r_srz=getappdata(0,<span class="string">'r_srz_ul'</span>);
+setappdata(0,<span class="string">'r_srz'</span>,r_srz)
+C_p=getappdata(0,<span class="string">'C_p'</span>);
+C_z=getappdata(0',<span class="string">'C_z'</span>);
+dialog11=getappdata(0,<span class="string">'dialog11'</span>);
+<span class="keyword">if</span> dialog11==1
+
+    R=getappdata(0,<span class="string">'R_o2'</span>);
+
+<span class="keyword">end</span>
+
+<span class="comment">%==========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%Sile kocenja po osovinama u opterecenom stanju</span>
+
+F_kpo=F_ku.*(R./(1+R));
+setappdata(0,<span class="string">'F_kpo'</span>,F_kpo)
+F_kzo=F_ku.*(1./(1+R));
+setappdata(0,<span class="string">'F_kzo'</span>,F_kzo)
+<span class="comment">%Sile kocenja po tocku u opterecenom stanju</span>
+F_kpto=F_kpo./2;
+setappdata(0,<span class="string">'F_kpto'</span>,F_kpto)
+F_kzto=F_kzo./2;
+setappdata(0,<span class="string">'F_kzto'</span>,F_kzto)
+<span class="comment">%Momenti kocenja po tockovima u opterecenom stanju</span>
+M_kpto=F_kpto.*rd;
+setappdata(0,<span class="string">'M_kpto'</span>,M_kpto)
+M_kzto=F_kzto.*rd;
+setappdata(0,<span class="string">'M_kzto'</span>,M_kzto)
+
+<span class="comment">%Izbor srednjeg poluprecnika trenja (0.25-0.4)*rd [m]</span>
+
+<span class="comment">%r_srp=r_srp1.*rd;</span>
+<span class="comment">%r_srz=r_srz1.*rd;</span>
+<span class="comment">%Izbor karakteristika kocnice C(Simpleks[1.7-2.2] Dupleks[2.4-3.2]</span>
+<span class="comment">%Duoservo[2.8-5.5] Disk sa stegom[0.7] Lamelasta[3.2-6.5])</span>
+
+
+<span class="comment">%Potrebne sile trenja po kocnicama</span>
+
+F_mip=M_kpto./(r_srp./1000);
+F_miz=M_kzto./(r_srz./1000);
+setappdata(0,<span class="string">'F_mip'</span>,F_mip)
+setappdata(0,<span class="string">'F_miz'</span>,F_miz)
+<span class="comment">%getappdata(0,'F_mip')</span>
+<span class="comment">%getappdata(0,'F_miz')</span>
+
+<span class="comment">%Potrebne sile aktiviranja kocnica</span>
+
+F_ap=(F_mip./C_p)./eta_m;
+F_az=(F_miz./C_z)./eta_m;
+setappdata(0,<span class="string">'F_ap'</span>,F_ap)
+setappdata(0,<span class="string">'F_az'</span>,F_az)
+<span class="comment">%getappdata(0,'F_ap')</span>
+<span class="comment">%getappdata(0,'F_az')</span>
+
+<span class="comment">%Odredjivanje potrebne povrsine poprecnog preseka klipa kocnog cilindra[m^2]!</span>
+A_kp=((F_ap./p_hmax)./eta_h);
+A_kz=((F_az./p_hmax)./eta_h);
+setappdata(0,<span class="string">'A_kp'</span>,A_kp)
+setappdata(0,<span class="string">'A_kz'</span>,A_kz)
+
+<span class="comment">%Odredjivanje potrebnog precnika klipa kocnog cilindra[m]!</span>
+
+d_kcp=(((4.*A_kp)./pi).^(1/2));
+d_kcz=(((4.*A_kz)./pi).^(1/2));
+
+<span class="comment">%Odredjivanje potrebnog precnika klipa kocnog cilindra[mm]!</span>
+d_kcp=ceil(d_kcp.*1000);
+d_kcz=ceil(d_kcz.*1000);
+
+setappdata(0,<span class="string">'d_kcprac'</span>,d_kcp)
+setappdata(0,<span class="string">'d_kczrac'</span>,d_kcz)
+</pre><pre class="codeinput"><span class="keyword">function</span> PrenMeh_Rac
+</pre><pre class="codeinput"><span class="comment">%Funkcija za izbor komande</span>
+
+<span class="comment">%Ulazne velicine</span>
+<span class="comment">%==========================================================================</span>
+<span class="comment">%F_p             [N]     Sila na pedali(ne sme da predje vrednost od 500N)</span>
+<span class="comment">%i_p             [/]     Prenosni odnos prenosnog mehanizma komande(4.5-7)</span>
+<span class="comment">%p_h             [MPa]   Maksimalni pritisak u sistemu (6-10MPa)</span>
+<span class="comment">%d_gkc           [m]     Precnik glavnog kocnog cilindra</span>
+<span class="comment">%K_sp            [/]     Pojacanje servo pojacala</span>
+<span class="comment">%eta_mk          [/]     Stepen korisnosti komande</span>
+<span class="comment">%F_gkc           [N]     Sila na klipnjaci glavnog kocnog cilindra</span>
+<span class="comment">%p_hmax          [MPa]   Najveci neregulisani pritisak u HPM-u (6-10(12)[MPa])</span>
+<span class="comment">%f_pedale        [mm]    Hod pedale(vrednosti za mehanicki prenosni</span>
+<span class="comment">%sistem-ne treba da predje 150[mm], dok za servo pojacani sistem vrednosti</span>
+<span class="comment">%bi trebalo da su u opsegu od 75 do 90[mm] da bi se ostvarilo usporenje od</span>
+<span class="comment">%priblizno 1g)</span>
+<span class="comment">%==========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%Funkcija za unos podataka----</span>
+<span class="comment">% koristi se naredba 'input' za unos preko komandne linije</span>
+<span class="comment">% opcija 's' se odnosi na to da izlazni parametar bude string</span>
+<span class="comment">% zatim se koristi komanda 'str2num' za pretvaranje stringa u numericki</span>
+<span class="comment">% zapis</span>
+<span class="comment">%Primer---- InputStr_N=input('Unesi broj stepeni prenosa N:  ','s');</span>
+<span class="comment">% N = str2num(InputStr_N);</span>
+<span class="comment">%==========================================================================</span>
+F_pul=getappdata(0,<span class="string">'F_pmax'</span>); <span class="comment">%(max 500[N])-iz ulaznih podataka</span>
+
+i_p=getappdata(0,<span class="string">'i_p'</span>);      <span class="comment">%Bice uneto iz trenutnog GUI-a</span>
+p_hmax=getappdata(0,<span class="string">'p_hmax'</span>);<span class="comment">%Bice uneto iz proslog GUI-a</span>
+C_sp=getappdata(0,<span class="string">'C_sp'</span>);    <span class="comment">%Bice uneto iz trenutnog GUI-a</span>
+eta_h=getappdata(0,<span class="string">'eta_h'</span>);  <span class="comment">%Bice uneto iz proslog GUI-a</span>
+
+<span class="comment">%Moze i da se usvoji i da se prema njemu dimenzionise prenosni odnos pedale</span>
+
+<span class="comment">%Izracunavanje precnika glavnog kocnog cilindra[m]!</span>
+<span class="comment">%==========================================================================</span>
+
+<span class="comment">%Potrebna sila na klipnjaci glavnog kocnog cilindra [N]</span>
+
+F_gkc=F_pul.*i_p.*C_sp.*eta_h;
+setappdata(0,<span class="string">'F_gkc'</span>,F_gkc)
+<span class="comment">%getappdata(0,'F_gkc')</span>
+
+<span class="comment">%Izracunavanje precnika gkc [m]</span>
+
+A=4.*F_gkc;
+B=p_hmax.*pi;
+d_gkc=(A./B).^(1./2);
+
+
+
+<span class="comment">%Izracunavanje precnika glavnog kocnog cilindra[mm]!</span>
+<span class="comment">%d_gkc=d_gkc%.*1000  %Potrebni precnik da bi se ostvarila potrebna sila,</span>
+                    <span class="comment">%treba usvojiti najblizi precnik prema katalogu proizv.</span>
+setappdata(0,<span class="string">'d_gkc'</span>,d_gkc)
+getappdata(0,<span class="string">'d_gkc'</span>)
+
+
+<span class="comment">% --- Executes on button press in pushbutton1.</span>
+</pre><pre class="codeinput"><span class="keyword">function</span> pushbutton1_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to pushbutton1 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">%Provera unetih podataka%</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+bool
+
+bool_value=getappdata(0,<span class="string">'bool_value_ul'</span>);
+
+            <span class="keyword">if</span> any(bool_value==0)
+
+                warndlg(<span class="string">'Nisu uneti svi podaci, unesite sve podatke i pritisnite dugme dalje!!!'</span>,<span class="string">'UPOZORENJE'</span>)
+                error(<span class="string">'Vrednost nije uneta'</span>)
+
+            <span class="keyword">end</span>
+
+
+
+il=getappdata(0,<span class="string">'UsvajanjeFTK'</span>);
+
+
+<span class="keyword">if</span> isempty(il)
+FTK_Rac
+PrenMeh_Rac
+<span class="keyword">end</span>
+
+<span class="comment">%BROJAC</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+currentCounterValue = str2double(get(handles.Counter, <span class="string">'String'</span>));
+newString = sprintf(<span class="string">'%d'</span>, int32(currentCounterValue +1));
+set(handles.Counter, <span class="string">'String'</span>, newString )
+counter=str2double(get(handles.Counter,<span class="string">'String'</span>));
+<span class="comment">%</span>
+<span class="comment">% if counter&gt;2 %ako je brojac veci od 2, resetovati ga na 0</span>
+<span class="comment">%     newString=0;</span>
+<span class="comment">%     newString=num2str(newString);</span>
+<span class="comment">%    set(handles.Counter, 'String', newString )</span>
+<span class="comment">%</span>
+<span class="comment">% end</span>
+
+<span class="comment">%ULAZI ZA ISPIS</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+handles.F_mip=num2str(getappdata(0,<span class="string">'F_mip'</span>));
+handles.F_miz=num2str(getappdata(0,<span class="string">'F_miz'</span>));
+handles.F_ap=num2str(getappdata(0,<span class="string">'F_ap'</span>));
+handles.F_az=num2str(getappdata(0,<span class="string">'F_az'</span>));
+handles.d_cp=num2str(getappdata(0,<span class="string">'d_kcprac'</span>));
+handles.d_cz=num2str(getappdata(0,<span class="string">'d_kczrac'</span>));
+handles.F_gkc=num2str(getappdata(0,<span class="string">'F_gkc'</span>));
+handles.d_gkc=num2str(getappdata(0,<span class="string">'d_gkc'</span>));
+
+<span class="comment">%ISPIS U POLJA</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+F_miphan=handles.F_mip;             <span class="comment">%Sila trenja napred</span>
+set(handles.Fmip,<span class="string">'String'</span>,F_miphan)
+F_mizhan=handles.F_miz;             <span class="comment">%Sila trenja pozadi</span>
+set(handles.Fmiz,<span class="string">'String'</span>,F_mizhan)
+F_aphan=handles.F_ap;             <span class="comment">%Sila aktivacije napred</span>
+set(handles.Fap,<span class="string">'String'</span>,F_aphan)
+F_azhan=handles.F_az;             <span class="comment">%Sila aktivacije pozadi</span>
+set(handles.Faz,<span class="string">'String'</span>,F_azhan)
+d_kcphan=handles.d_cp;             <span class="comment">%Precnik klipa napred</span>
+set(handles.dcp,<span class="string">'String'</span>,d_kcphan)
+d_kczhan=handles.d_cz;            <span class="comment">%Precnik klipa pozadi</span>
+set(handles.dcz,<span class="string">'String'</span>,d_kczhan)
+d_gkchan=handles.d_gkc;               <span class="comment">%Precnik gkc-a</span>
+set(handles.dgkcispis,<span class="string">'String'</span>,d_gkchan)
+F_gkchan=handles.F_gkc;                 <span class="comment">%Sila na klipnjaci gkc</span>
+set(handles.Fgkcispis,<span class="string">'String'</span>,F_gkchan)
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+
+
+<span class="keyword">if</span> isempty(il)
+
+Gui_dialog14
+il=getappdata(0,<span class="string">'UsvajanjeFTK'</span>);
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> counter&gt;1
+<span class="keyword">if</span> il==1
+
+    InputOutputFinal
+    print_FTK
+     close()
+    GUI_ZavProrBR
+
+<span class="keyword">else</span>
+
+     <span class="keyword">if</span> il==0
+<span class="comment">%</span>
+<span class="comment">%</span>
+              InputOutputFinal
+
+              bool_data_usv=getappdata(0,<span class="string">'bool_usv_pod'</span>);
+
+              <span class="keyword">if</span> bool_data_usv==0
+
+                warndlg(<span class="string">'Nisu unete usvojene vrednosti, unesite usvojene vrednosti!'</span>,<span class="string">'UPOZORENJE'</span>)
+                error(<span class="string">'Vrednost nije uneta'</span>)
+
+              <span class="keyword">end</span>
+
+<span class="comment">% %</span>
+
+<span class="comment">%</span>
+             <span class="keyword">if</span> counter&gt;1
+<span class="comment">%</span>
+               print_FTK
+               close()
+               GUI_ZavProrBR
+<span class="comment">%</span>
+             <span class="keyword">end</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+    <span class="keyword">end</span>
+<span class="comment">%</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+    <span class="keyword">function</span> bool
+
+i_p=getappdata(0,<span class="string">'i_p'</span>);
+r_srp=getappdata(0,<span class="string">'r_srp_ul'</span>);
+r_srz=getappdata(0,<span class="string">'r_srz_ul'</span>);
+C_p=getappdata(0,<span class="string">'C_p'</span>);
+C_z=getappdata(0,<span class="string">'C_z'</span>);
+d_cp=getappdata(0,<span class="string">'d_cp'</span>);
+d_cz=getappdata(0,<span class="string">'d_cz'</span>);
+p_hmax=getappdata(0,<span class="string">'p_hmax'</span>);
+eta_h=getappdata(0,<span class="string">'eta_h'</span>);
+eta_m=getappdata(0,<span class="string">'eta_m'</span>);
+d_gkc=getappdata(0,<span class="string">'d_gkc'</span>);
+C_sp=getappdata(0,<span class="string">'C_sp'</span>);
+i_p(isempty(i_p))=0;
+C_sp(isempty(C_sp))=0;
+C_p(isempty(C_p))=0;
+C_z(isempty(C_z))=0;
+d_cp(isempty(d_cp))=0;
+d_cz(isempty(d_cz))=0;
+r_srp(isempty(r_srp))=0;
+r_srz(isempty(r_srz))=0;
+eta_h(isempty(eta_h))=0;
+eta_m(isempty(eta_m))=0;
+p_hmax(isempty(p_hmax))=0;
+<span class="comment">%Vrednosti za upozorenje</span>
+
+bool_data=[r_srp, r_srz, C_p,C_z ,p_hmax, eta_h, eta_m,C_sp,i_p ];
+bool_value_ul=logical(bool_data);
+
+setappdata(0,<span class="string">'bool_value_ul'</span>, bool_value_ul)
+
+
+
+
+<span class="keyword">function</span> print_FTK
+
+<span class="comment">%Funkcija za stampanje podataka u .xls tabelu</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">%Podaci za upis</span>
+F_kpo=getappdata(0,<span class="string">'F_kpo'</span>);
+F_kzo=getappdata(0,<span class="string">'F_kzo'</span>);
+F_kpto=getappdata(0,<span class="string">'F_kpto'</span>);
+F_kzto=getappdata(0,<span class="string">'F_kzto'</span>);
+M_kpto=getappdata(0,<span class="string">'M_kpto'</span>);
+M_kzto=getappdata(0,<span class="string">'M_kzto'</span>);
+r_srp=getappdata(0,<span class="string">'r_srp'</span>);
+r_srz=getappdata(0,<span class="string">'r_srz'</span>);
+C_p=getappdata(0,<span class="string">'C_p'</span>);
+C_z=getappdata(0,<span class="string">'C_z'</span>);
+F_mip=getappdata(0,<span class="string">'F_mip'</span>);
+F_miz=getappdata(0,<span class="string">'F_miz'</span>);
+F_ap=getappdata(0,<span class="string">'F_ap'</span>);
+F_az=getappdata(0,<span class="string">'F_az'</span>);
+A_kp=getappdata(0,<span class="string">'A_kp'</span>);
+A_kz=getappdata(0,<span class="string">'A_kz'</span>);
+d_kcp=getappdata(0,<span class="string">'d_cp'</span>);
+d_kcz=getappdata(0,<span class="string">'d_cz'</span>);
+p_hmax=getappdata(0,<span class="string">'p_hmax'</span>);
+eta_h=getappdata(0,<span class="string">'eta_h'</span>);
+eta_m=getappdata(0,<span class="string">'eta_m'</span>);
+d_gkc=getappdata(0,<span class="string">'d_gkc'</span>);
+C=getappdata(0,<span class="string">'xls_ime_xls'</span>);
+<span class="comment">%Komanda za unos</span>
+
+<span class="comment">%Vrednosti za upozorenje</span>
+
+bool_data1=[r_srp, r_srz, C_p,C_z ,p_hmax, eta_h, eta_m ];
+bool_value1=logical(bool_data1);
+bool_data2=[d_kcp,d_kcz,d_gkc];
+setappdata(0,<span class="string">'bool_value1'</span>,bool_value1)
+bool_value2=logical(bool_data2);
+setappdata(0,<span class="string">'bool_value2'</span>,bool_value2)
+bool_value_tot=[bool_value1, bool_value2];
+setappdata(0,<span class="string">'bool_value_tot'</span>, bool_value_tot)
+
+
+DataMatlab2XLS = {<span class="string">'F_kpo[N]'</span>, <span class="string">'F_kzo[N]'</span>,<span class="string">'F_kpto[N]'</span>,<span class="string">'F_kzto[N]'</span>, <span class="string">'M_kpto[Nm]'</span>,<span class="keyword">...</span>
+    <span class="string">'M_kzto[Nm]'</span>,<span class="string">'r_srpd[mm]'</span>,<span class="string">'r_srzd[mm]'</span>,<span class="string">'C_p[/]'</span>,<span class="string">'C_z[/]'</span>,<span class="string">'F_mip[N]'</span>,<span class="keyword">...</span>
+  <span class="string">'F_miz[N]'</span>,<span class="string">'F_ap[N]'</span>,<span class="string">'F_az[N]'</span>,<span class="string">'A_kp[m^2]'</span>,<span class="string">'A_kz[m^2]'</span>,<span class="string">'d_kcp[mm]'</span>,<span class="string">'d_kcz[mm]'</span>,<span class="keyword">...</span>
+  <span class="string">'d_gkc[mm]'</span>,<span class="string">'p_hmax[Pa]'</span>,<span class="string">'eta_h[/]'</span>,<span class="string">'eta_m[/]'</span>;F_kpo F_kzo F_kpto F_kzto M_kpto M_kzto r_srp<span class="keyword">...</span>
+  r_srz C_p C_z F_mip F_miz F_ap F_az A_kp A_kz d_kcp d_kcz d_gkc p_hmax eta_h<span class="keyword">...</span>
+  eta_m};
+DataMatlab2XLSt=DataMatlab2XLS';
+warning(<span class="string">'off'</span>,<span class="string">'MATLAB:xlswrite:Addsheet'</span>);
+xlswrite(C, DataMatlab2XLSt,<span class="keyword">...</span>
+    <span class="string">'OdrPotrMomentaiSila'</span>,<span class="string">'A1'</span>);
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Fmip_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Fmip (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+
+
+<span class="keyword">function</span> dcpu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dcpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of dcpu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of dcpu as a double</span>
+
+d_kcpu= str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'d_kcpu'</span>,d_kcpu)
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> dcpu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dcpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> dczu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dczu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of dczu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of dczu as a double</span>
+
+d_kczu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'d_kczu'</span>,d_kczu)
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> dczu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dczu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> rsrpu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to rsrpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+r_srpu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'r_srpu'</span>,r_srpu)
+<span class="comment">% Hints: get(hObject,'String') returns contents of rsrpu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of rsrpu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> rsrpu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to rsrpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> rsrzu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to rsrzu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+r_srzu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'r_srzu'</span>,r_srzu)
+<span class="comment">% Hints: get(hObject,'String') returns contents of rsrzu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of rsrzu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> rsrzu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to rsrzu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> ip_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to ip (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+i_p=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'i_p'</span>,i_p)
+<span class="comment">% Hints: get(hObject,'String') returns contents of ip as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of ip as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> ip_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to ip (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> csp_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to csp (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+C_sp=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_sp'</span>,C_sp)
+<span class="comment">% Hints: get(hObject,'String') returns contents of csp as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of csp as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> csp_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to csp (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> cpu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to cpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+C_pu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_pu'</span>,C_pu)
+<span class="comment">% Hints: get(hObject,'String') returns contents of cpu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of cpu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> cpu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to cpu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> czu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to czu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+C_zu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_zu'</span>,C_zu)
+<span class="comment">% Hints: get(hObject,'String') returns contents of czu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of czu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> czu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to czu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> ipu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to ipu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+i_pu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'i_pu'</span>,i_pu)
+<span class="comment">% Hints: get(hObject,'String') returns contents of ipu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of ipu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> ipu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to ipu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> cspu_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to cspu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+C_spu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'C_spu'</span>,C_spu)
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of cspu as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of cspu as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> cspu_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to cspu (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> dgkc_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dgkc (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+d_gkcu=str2double(get(hObject,<span class="string">'String'</span>));
+setappdata(0,<span class="string">'d_gkcu'</span>,d_gkcu)
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of dgkc as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of dgkc as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> dgkc_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dgkc (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> dcp_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to dcp (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+
+
+<span class="keyword">function</span> edit24_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to edit24 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of edit24 as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of edit24 as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> edit24_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to edit24 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+<span class="keyword">function</span> InputOutputFinal
+</pre><pre class="codeinput"><span class="comment">%Funkcija za ispis racunskih/usvojenih vrednosti</span>
+<span class="comment">%--------------------------------------------------------------------------</span>
+
+
+
+il=getappdata(0,<span class="string">'UsvajanjeFTK'</span>);
+<span class="keyword">if</span> il==0
+
+i_pu=0;
+C_spu=0;
+C_pu=0;
+C_zu=0;
+d_cpu=0;
+d_czu=0;
+r_spu=0;
+r_srzu=0;
+
+<span class="keyword">end</span>
+i_p=getappdata(0,<span class="string">'i_p'</span>);
+i_pu=getappdata(0,<span class="string">'i_pu'</span>);
+
+
+<span class="keyword">if</span> isempty(i_p)
+
+    setappdata(0,<span class="string">'i_p'</span>,i_pu)
+
+<span class="keyword">end</span>
+</pre><pre class="codeinput"><span class="keyword">if</span> i_pu&gt;0
+
+        setappdata(0,<span class="string">'i_p'</span>,i_pu)
+
+<span class="keyword">end</span>
+
+C_sp=getappdata(0,<span class="string">'C_sp'</span>);
+C_spu=getappdata(0,<span class="string">'C_spu'</span>);
+
+<span class="keyword">if</span> isempty(C_sp)
+
+    setappdata(0,<span class="string">'C_sp'</span>, C_spu)
+
+
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> C_spu&gt;0
+
+        setappdata(0,<span class="string">'C_sp'</span>, C_spu)
+
+<span class="keyword">end</span>
+
+
+
+C_p=getappdata(0,<span class="string">'C_p'</span>);
+C_pu=getappdata(0,<span class="string">'C_pu'</span>);
+
+<span class="keyword">if</span> isempty(C_p)
+
+    setappdata(0,<span class="string">'C_p'</span>, C_pu)
+
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> C_pu&gt;0
+
+        setappdata(0,<span class="string">'C_p'</span>, C_pu)
+
+<span class="keyword">end</span>
+
+
+
+C_z=getappdata(0,<span class="string">'C_z'</span>);
+C_zu=getappdata(0,<span class="string">'C_zu'</span>);
+
+<span class="keyword">if</span> isempty(C_z)
+
+    setappdata(0,<span class="string">'C_z'</span>, C_zu)
+
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> C_zu&gt;0
+
+     setappdata(0,<span class="string">'C_z'</span>, C_zu)
+
+<span class="keyword">end</span>
+
+
+
+d_cp=getappdata(0,<span class="string">'d_kcprac'</span>);
+setappdata(0,<span class="string">'d_cp'</span>,d_cp)
+d_cpu=getappdata(0,<span class="string">'d_kcpu'</span>);
+
+<span class="keyword">if</span> isempty(d_cp)
+
+    setappdata(0,<span class="string">'d_cp'</span>,d_cpu)
+
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> d_cpu&gt;0
+
+        setappdata(0,<span class="string">'d_cp'</span>,d_cpu)
+<span class="keyword">end</span>
+
+
+d_cz=getappdata(0,<span class="string">'d_kczrac'</span>);
+setappdata(0,<span class="string">'d_cz'</span>,d_cz)
+d_czu=getappdata(0,<span class="string">'d_kczu'</span>);
+
+<span class="keyword">if</span> isempty(d_cz)
+
+    setappdata(0,<span class="string">'d_cz'</span>,d_czu)
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> d_czu&gt;0
+
+    setappdata(0,<span class="string">'d_cz'</span>,d_czu)
+
+<span class="keyword">end</span>
+
+
+
+
+d_gkc=getappdata(0,<span class="string">'d_gkc'</span>);
+d_gkcu=getappdata(0,<span class="string">'d_gkcu'</span>);
+
+<span class="keyword">if</span> isempty(d_gkc)
+
+    setappdata(0,<span class="string">'d_gkc'</span>,d_gkcu)
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> d_gkcu&gt;0
+
+    setappdata(0,<span class="string">'d_gkc'</span>,d_gkcu)
+
+<span class="keyword">end</span>
+
+
+r_srp=getappdata(0,<span class="string">'r_srp'</span>);
+r_srpu=getappdata(0,<span class="string">'r_srpu'</span>);
+
+<span class="keyword">if</span> isempty(r_srp)
+
+    setappdata(0,<span class="string">'r_srp'</span>, r_srpu)
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> r_srpu&gt;0
+
+   setappdata(0,<span class="string">'r_srp'</span>, r_srpu)
+
+<span class="keyword">end</span>
+
+
+r_srz=getappdata(0,<span class="string">'r_srz'</span>);
+r_srzu=getappdata(0,<span class="string">'r_srzu'</span>);
+
+<span class="keyword">if</span> isempty(r_srz)
+
+    setappdata(0,<span class="string">'r_srz'</span>, r_srzu)
+
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> r_srzu&gt;0
+
+    setappdata(0,<span class="string">'r_srz'</span>, r_srzu)
+
+<span class="keyword">end</span>
+
+
+
+<span class="comment">%Podaci za beskonacnu petlju do unosa svih usvojenih podataka</span>
+<span class="comment">%Problem treba da prikazuje kada podaci za usvajanje nisu uneti....</span>
+i_pu(isempty(i_pu))=0;
+C_spu(isempty(C_spu))=0;
+C_pu(isempty(C_pu))=0;
+C_pu(isempty(C_zu))=0;
+d_cpu(isempty(d_cpu))=0;
+d_czu(isempty(d_czu))=0;
+r_srpu(isempty(r_srpu))=0;
+r_srzu(isempty(r_srzu))=0;
+ bool_data=[i_pu, C_spu, C_pu, C_zu, d_cpu, d_czu, r_srpu<span class="keyword">...</span>
+     , r_srzu];
+ bool_value=logical(bool_data);
+
+ <span class="keyword">if</span> any(bool_value)==1
+
+     bool_usv_pod=1;
+
+ <span class="keyword">else</span>
+     bool_usv_pod=0;
+
+ <span class="keyword">end</span>
+ setappdata(0,<span class="string">'bool_usv_pod'</span>,bool_usv_pod)
+</pre><img vspace="5" hspace="5" src="FTK_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function varargout = FTK(varargin)
+% FTK MATLAB code for FTK.fig
+%      FTK, by itself, creates a new FTK or raises the existing
+%      singleton*.
+%
+%      H = FTK returns the handle to a new FTK or the handle to
+%      the existing singleton*.
+%
+%      FTK('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in FTK.M with the given input arguments.
+%
+%      FTK('Property','Value',...) creates a new FTK or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before FTK_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to FTK_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help FTK
+
+% Last Modified by GUIDE v2.5 17-Jul-2016 16:16:51
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @FTK_OpeningFcn, ...
+                   'gui_OutputFcn',  @FTK_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+%feature('DefaultCharacterSet', 'UTF8')
+% REPLACE_WITH_DASH_DASH- Executes just before FTK is made visible.
+function FTK_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to FTK (see VARARGIN)
+
+% Choose default command line output for FTK
+
+
+
+%handles.Fmip=num2str(getappdata(0,'Fmip'))
+handles.output = hObject;
+set(handles.Counter,'String',0)%handles za brojac
+
+% Update handles structure
+guidata(hObject, handles);
+
+%FTK_Rac
+                
+%set(handles.Gui_FTK, 'units', 'normalized', 'position', [0.05 0.15 0.9 0.8])
+
+
+
+
+
+setappdata(0,'FTK', gcf);
+setappdata(gcf, 'FTK_Rac', @FTK_Rac);
+
+
+% UIWAIT makes FTK wait for user response (see UIRESUME)
+% uiwait(handles.Gui_FTK);
+
+
+% REPLACE_WITH_DASH_DASH- Outputs from this function are returned to the command line.
+function varargout = FTK_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+
+function pmax_Callback(hObject, eventdata, handles)
+% hObject    handle to pmax (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of pmax as text
+%        str2double(get(hObject,'String')) returns contents of pmax as a double
+
+p_hmax=str2double(get(hObject,'String'));
+setappdata(0,'p_hmax',p_hmax);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function pmax_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to pmax (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function eta_m_Callback(hObject, eventdata, handles)
+% hObject    handle to eta_m (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of eta_m as text
+%        str2double(get(hObject,'String')) returns contents of eta_m as a double
+
+eta_m=str2double(get(hObject,'String'));
+setappdata(0,'eta_m',eta_m);
+
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function eta_m_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to eta_m (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function eta_h_Callback(hObject, eventdata, handles)
+% hObject    handle to eta_h (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of eta_h as text
+%        str2double(get(hObject,'String')) returns contents of eta_h as a double
+eta_h=str2double(get(hObject,'String'));
+setappdata(0,'eta_h',eta_h);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function eta_h_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to eta_h (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function r_srp_Callback(hObject, eventdata, handles)
+% hObject    handle to r_srp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of r_srp as text
+%        str2double(get(hObject,'String')) returns contents of r_srp as a double
+r_srp_ul=str2double(get(hObject,'String'));
+setappdata(0,'r_srp_ul',r_srp_ul);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function r_srp_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to r_srp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function r_srz_Callback(hObject, eventdata, handles)
+% hObject    handle to r_srz (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of r_srz as text
+%        str2double(get(hObject,'String')) returns contents of r_srz as a double
+r_srz_ul=str2double(get(hObject,'String'));
+setappdata(0,'r_srz_ul',r_srz_ul);
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function r_srz_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to r_srz (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function C_p_Callback(hObject, eventdata, handles)
+% hObject    handle to C_p (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of C_p as text
+%        str2double(get(hObject,'String')) returns contents of C_p as a double
+
+C_p=str2double(get(hObject,'String'));
+setappdata(0,'C_p',C_p);
+
+
+
+
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function C_p_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to C_p (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function C_z_Callback(hObject, eventdata, handles)
+% hObject    handle to C_z (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of C_z as text
+%        str2double(get(hObject,'String')) returns contents of C_z as a double
+
+C_z=str2double(get(hObject,'String'));
+setappdata(0,'C_z',C_z);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function C_z_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to C_z (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function FTK_Rac
+%Odredjivanje ukupnih sila i momenata
+%==========================================================================
+%%Velicine 
+%==========================================================================
+%F_uk         [N]     Ukupna sila kocenja 
+%rd           [m]     Dinamicki poluprecnik trenja
+%F_kpo        [N]     Sila kocenja na prednjoj osovini u opterecenom stanju
+%F_kzo        [N]     Sila kocenja na zadnjoj osovini u opterecenom stanju
+%F_kpto       [N]     Sila po tocku na predjoj osovini u opterecenom stanju
+%F_zpto       [N]     Sila po tocku na zadnjoj osovini u opterecenom stanju
+%M_kpto       [Nm]    Moment kocenja po tocku na prednjoj osovini u 
+%                     opterecenom stanju
+%M_zpto       [Nm]    Moment kocenja po tocku na zadnjoj osovini u
+%                     opterecenom stanju.
+%r_srp        [m]     Srednji poluprecnik trenja prednje
+%                     kocnice(0.25-0.4rd)
+%C_p          [/]     Karakteristika prednje kocnice 
+%r_srz        [m]     Srednji poluprecnik trenja zadnje kocnice(0.25-0.4rd) 
+%C_z          [/]     Karakteristika zadnje kocnice 
+%Fmip        [N]     Potrebna sila trenja na prednjoj osovini 
+%Fmiz        [N]     Potrebna sila trenja na zadnjoj osovini 
+%eta_m        [/]     Mehanicki stepen korisnosti (0.5-0.9)
+%p_hmax       [MPa]   Najveci neregulisani pritisak u HPM-u (6-10(12)[MPa])
+%A_kp         [m^2]   Potrebna povrsina poprecnog preseka klipa kocnog cil.
+%A_kz         [m^2]   Potrebna povrsina poprecnog preseka klipa kocnog cil.
+%eta_h        [/]     Hidraulicki stepen korisnosti (0.9)
+%d_kcp        [m]     Precnik klipa kocnog cilindra prednjih kocnica 
+%d_kcz        [m]     Precnik klipa kocnog cilindra zadnjih kocnica 
+%==========================================================================
+%%
+%Funkcija za unos podatakaREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% koristi se naredba 'input' za unos preko komandne linije
+% opcija 's' se odnosi na to da izlazni parametar bude string
+% zatim se koristi komanda 'str2num' za pretvaranje stringa u numericki
+% zapis 
+%PrimerREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH InputStr_N=input('Unesi broj stepeni prenosa N:  ','s');
+% N = str2num(InputStr_N);
+%==========================================================================
+%%
+%Ulazne Velicine 
+%==========================================================================
+F_ku=getappdata(0,'F_ku');
+R=getappdata(0,'R');
+rd=getappdata(0,'r_d');
+eta_m=getappdata(0,'eta_m');
+eta_h=getappdata(0,'eta_h');
+p_hmax=getappdata(0,'p_hmax').*(10.^6);%[Pa]
+r_srp=getappdata(0,'r_srp_ul');
+setappdata(0,'r_srp',r_srp)
+r_srz=getappdata(0,'r_srz_ul');
+setappdata(0,'r_srz',r_srz)
+C_p=getappdata(0,'C_p');
+C_z=getappdata(0','C_z');
+dialog11=getappdata(0,'dialog11');
+if dialog11==1
+    
+    R=getappdata(0,'R_o2');
+    
+end
+
+%==========================================================================
+%%
+%Sile kocenja po osovinama u opterecenom stanju
+
+F_kpo=F_ku.*(R./(1+R));
+setappdata(0,'F_kpo',F_kpo)
+F_kzo=F_ku.*(1./(1+R));
+setappdata(0,'F_kzo',F_kzo)
+%Sile kocenja po tocku u opterecenom stanju 
+F_kpto=F_kpo./2;
+setappdata(0,'F_kpto',F_kpto)
+F_kzto=F_kzo./2;
+setappdata(0,'F_kzto',F_kzto)
+%Momenti kocenja po tockovima u opterecenom stanju
+M_kpto=F_kpto.*rd;
+setappdata(0,'M_kpto',M_kpto)
+M_kzto=F_kzto.*rd;
+setappdata(0,'M_kzto',M_kzto)
+
+%Izbor srednjeg poluprecnika trenja (0.25-0.4)*rd [m]
+
+%r_srp=r_srp1.*rd;
+%r_srz=r_srz1.*rd;
+%Izbor karakteristika kocnice C(Simpleks[1.7-2.2] Dupleks[2.4-3.2]
+%Duoservo[2.8-5.5] Disk sa stegom[0.7] Lamelasta[3.2-6.5])
+
+
+%Potrebne sile trenja po kocnicama 
+
+F_mip=M_kpto./(r_srp./1000);
+F_miz=M_kzto./(r_srz./1000);
+setappdata(0,'F_mip',F_mip)
+setappdata(0,'F_miz',F_miz)
+%getappdata(0,'F_mip')
+%getappdata(0,'F_miz')
+
+%Potrebne sile aktiviranja kocnica 
+
+F_ap=(F_mip./C_p)./eta_m;
+F_az=(F_miz./C_z)./eta_m;
+setappdata(0,'F_ap',F_ap)
+setappdata(0,'F_az',F_az)
+%getappdata(0,'F_ap')
+%getappdata(0,'F_az')
+
+%Odredjivanje potrebne povrsine poprecnog preseka klipa kocnog cilindra[m^2]!
+A_kp=((F_ap./p_hmax)./eta_h);
+A_kz=((F_az./p_hmax)./eta_h);
+setappdata(0,'A_kp',A_kp)
+setappdata(0,'A_kz',A_kz)
+
+%Odredjivanje potrebnog precnika klipa kocnog cilindra[m]!
+
+d_kcp=(((4.*A_kp)./pi).^(1/2));
+d_kcz=(((4.*A_kz)./pi).^(1/2));
+
+%Odredjivanje potrebnog precnika klipa kocnog cilindra[mm]!
+d_kcp=ceil(d_kcp.*1000);
+d_kcz=ceil(d_kcz.*1000);
+
+setappdata(0,'d_kcprac',d_kcp)
+setappdata(0,'d_kczrac',d_kcz)
+
+
+
+function PrenMeh_Rac
+%Funkcija za izbor komande 
+
+%Ulazne velicine
+%==========================================================================
+%F_p             [N]     Sila na pedali(ne sme da predje vrednost od 500N)
+%i_p             [/]     Prenosni odnos prenosnog mehanizma komande(4.5-7) 
+%p_h             [MPa]   Maksimalni pritisak u sistemu (6-10MPa)
+%d_gkc           [m]     Precnik glavnog kocnog cilindra
+%K_sp            [/]     Pojacanje servo pojacala
+%eta_mk          [/]     Stepen korisnosti komande 
+%F_gkc           [N]     Sila na klipnjaci glavnog kocnog cilindra
+%p_hmax          [MPa]   Najveci neregulisani pritisak u HPM-u (6-10(12)[MPa])
+%f_pedale        [mm]    Hod pedale(vrednosti za mehanicki prenosni 
+%sistem-ne treba da predje 150[mm], dok za servo pojacani sistem vrednosti
+%bi trebalo da su u opsegu od 75 do 90[mm] da bi se ostvarilo usporenje od
+%priblizno 1g)
+%==========================================================================
+%%
+%Funkcija za unos podatakaREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% koristi se naredba 'input' za unos preko komandne linije
+% opcija 's' se odnosi na to da izlazni parametar bude string
+% zatim se koristi komanda 'str2num' za pretvaranje stringa u numericki
+% zapis 
+%PrimerREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH InputStr_N=input('Unesi broj stepeni prenosa N:  ','s');
+% N = str2num(InputStr_N);
+%==========================================================================
+F_pul=getappdata(0,'F_pmax'); %(max 500[N])-iz ulaznih podataka
+
+i_p=getappdata(0,'i_p');      %Bice uneto iz trenutnog GUI-a
+p_hmax=getappdata(0,'p_hmax');%Bice uneto iz proslog GUI-a
+C_sp=getappdata(0,'C_sp');    %Bice uneto iz trenutnog GUI-a
+eta_h=getappdata(0,'eta_h');  %Bice uneto iz proslog GUI-a
+
+%Moze i da se usvoji i da se prema njemu dimenzionise prenosni odnos pedale
+
+%Izracunavanje precnika glavnog kocnog cilindra[m]!
+%==========================================================================
+
+%Potrebna sila na klipnjaci glavnog kocnog cilindra [N]
+
+F_gkc=F_pul.*i_p.*C_sp.*eta_h;
+setappdata(0,'F_gkc',F_gkc)
+%getappdata(0,'F_gkc')
+
+%Izracunavanje precnika gkc [m]
+
+A=4.*F_gkc;
+B=p_hmax.*pi;
+d_gkc=(A./B).^(1./2);
+
+
+
+%Izracunavanje precnika glavnog kocnog cilindra[mm]!
+%d_gkc=d_gkc%.*1000  %Potrebni precnik da bi se ostvarila potrebna sila,
+                    %treba usvojiti najblizi precnik prema katalogu proizv.
+setappdata(0,'d_gkc',d_gkc)
+getappdata(0,'d_gkc')
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in pushbutton1.
+function pushbutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%Provera unetih podataka%
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+bool
+
+bool_value=getappdata(0,'bool_value_ul');
+
+            if any(bool_value==0)
+
+                warndlg('Nisu uneti svi podaci, unesite sve podatke i pritisnite dugme dalje!!!','UPOZORENJE')
+                error('Vrednost nije uneta')
+
+            end
+
+
+ 
+il=getappdata(0,'UsvajanjeFTK');
+
+
+if isempty(il)
+FTK_Rac
+PrenMeh_Rac
+end
+
+%BROJAC
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+currentCounterValue = str2double(get(handles.Counter, 'String'));
+newString = sprintf('%d', int32(currentCounterValue +1));
+set(handles.Counter, 'String', newString )
+counter=str2double(get(handles.Counter,'String'));
+% 
+% if counter>2 %ako je brojac veci od 2, resetovati ga na 0
+%     newString=0;
+%     newString=num2str(newString);
+%    set(handles.Counter, 'String', newString )
+% 
+% end
+
+%ULAZI ZA ISPIS
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+handles.F_mip=num2str(getappdata(0,'F_mip'));
+handles.F_miz=num2str(getappdata(0,'F_miz'));
+handles.F_ap=num2str(getappdata(0,'F_ap'));
+handles.F_az=num2str(getappdata(0,'F_az'));
+handles.d_cp=num2str(getappdata(0,'d_kcprac'));
+handles.d_cz=num2str(getappdata(0,'d_kczrac'));
+handles.F_gkc=num2str(getappdata(0,'F_gkc'));
+handles.d_gkc=num2str(getappdata(0,'d_gkc'));
+
+%ISPIS U POLJA
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+F_miphan=handles.F_mip;             %Sila trenja napred
+set(handles.Fmip,'String',F_miphan) 
+F_mizhan=handles.F_miz;             %Sila trenja pozadi
+set(handles.Fmiz,'String',F_mizhan) 
+F_aphan=handles.F_ap;             %Sila aktivacije napred
+set(handles.Fap,'String',F_aphan) 
+F_azhan=handles.F_az;             %Sila aktivacije pozadi
+set(handles.Faz,'String',F_azhan) 
+d_kcphan=handles.d_cp;             %Precnik klipa napred
+set(handles.dcp,'String',d_kcphan) 
+d_kczhan=handles.d_cz;            %Precnik klipa pozadi
+set(handles.dcz,'String',d_kczhan) 
+d_gkchan=handles.d_gkc;               %Precnik gkc-a
+set(handles.dgkcispis,'String',d_gkchan)
+F_gkchan=handles.F_gkc;                 %Sila na klipnjaci gkc
+set(handles.Fgkcispis,'String',F_gkchan)
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+
+if isempty(il)
+
+Gui_dialog14
+il=getappdata(0,'UsvajanjeFTK');
+
+end
+ 
+if counter>1
+if il==1   
+    
+    InputOutputFinal
+    print_FTK
+     close()
+    GUI_ZavProrBR
+    
+else
+    
+     if il==0
+% 
+%         
+              InputOutputFinal
+              
+              bool_data_usv=getappdata(0,'bool_usv_pod');
+              
+              if bool_data_usv==0
+                 
+                warndlg('Nisu unete usvojene vrednosti, unesite usvojene vrednosti!','UPOZORENJE')
+                error('Vrednost nije uneta')
+                  
+              end
+
+% %         
+             
+%         
+             if counter>1
+%              
+               print_FTK
+               close()
+               GUI_ZavProrBR 
+%             
+             end
+%             
+%                     
+    end
+%         
+end
+end
+    
+   
+    function bool
+        
+i_p=getappdata(0,'i_p');
+r_srp=getappdata(0,'r_srp_ul');
+r_srz=getappdata(0,'r_srz_ul');
+C_p=getappdata(0,'C_p');
+C_z=getappdata(0,'C_z');
+d_cp=getappdata(0,'d_cp');
+d_cz=getappdata(0,'d_cz');
+p_hmax=getappdata(0,'p_hmax');
+eta_h=getappdata(0,'eta_h');
+eta_m=getappdata(0,'eta_m');
+d_gkc=getappdata(0,'d_gkc');
+C_sp=getappdata(0,'C_sp');
+i_p(isempty(i_p))=0;
+C_sp(isempty(C_sp))=0;
+C_p(isempty(C_p))=0;
+C_z(isempty(C_z))=0;
+d_cp(isempty(d_cp))=0;
+d_cz(isempty(d_cz))=0;
+r_srp(isempty(r_srp))=0;
+r_srz(isempty(r_srz))=0;
+eta_h(isempty(eta_h))=0;
+eta_m(isempty(eta_m))=0;
+p_hmax(isempty(p_hmax))=0;
+%Vrednosti za upozorenje
+
+bool_data=[r_srp, r_srz, C_p,C_z ,p_hmax, eta_h, eta_m,C_sp,i_p ];
+bool_value_ul=logical(bool_data);
+
+setappdata(0,'bool_value_ul', bool_value_ul)
+
+
+
+
+function print_FTK
+
+%Funkcija za stampanje podataka u .xls tabelu
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+%Podaci za upis
+F_kpo=getappdata(0,'F_kpo');
+F_kzo=getappdata(0,'F_kzo');
+F_kpto=getappdata(0,'F_kpto');
+F_kzto=getappdata(0,'F_kzto');
+M_kpto=getappdata(0,'M_kpto');
+M_kzto=getappdata(0,'M_kzto');
+r_srp=getappdata(0,'r_srp');
+r_srz=getappdata(0,'r_srz');
+C_p=getappdata(0,'C_p');
+C_z=getappdata(0,'C_z');
+F_mip=getappdata(0,'F_mip');
+F_miz=getappdata(0,'F_miz');
+F_ap=getappdata(0,'F_ap');
+F_az=getappdata(0,'F_az');
+A_kp=getappdata(0,'A_kp');
+A_kz=getappdata(0,'A_kz');
+d_kcp=getappdata(0,'d_cp');
+d_kcz=getappdata(0,'d_cz');
+p_hmax=getappdata(0,'p_hmax');
+eta_h=getappdata(0,'eta_h');
+eta_m=getappdata(0,'eta_m');
+d_gkc=getappdata(0,'d_gkc');
+C=getappdata(0,'xls_ime_xls');
+%Komanda za unos
+
+%Vrednosti za upozorenje
+
+bool_data1=[r_srp, r_srz, C_p,C_z ,p_hmax, eta_h, eta_m ];
+bool_value1=logical(bool_data1);
+bool_data2=[d_kcp,d_kcz,d_gkc];
+setappdata(0,'bool_value1',bool_value1)
+bool_value2=logical(bool_data2);
+setappdata(0,'bool_value2',bool_value2)
+bool_value_tot=[bool_value1, bool_value2];
+setappdata(0,'bool_value_tot', bool_value_tot)
+
+
+DataMatlab2XLS = {'F_kpo[N]', 'F_kzo[N]','F_kpto[N]','F_kzto[N]', 'M_kpto[Nm]',...
+    'M_kzto[Nm]','r_srpd[mm]','r_srzd[mm]','C_p[/]','C_z[/]','F_mip[N]',...
+  'F_miz[N]','F_ap[N]','F_az[N]','A_kp[m^2]','A_kz[m^2]','d_kcp[mm]','d_kcz[mm]',... 
+  'd_gkc[mm]','p_hmax[Pa]','eta_h[/]','eta_m[/]';F_kpo F_kzo F_kpto F_kzto M_kpto M_kzto r_srp...
+  r_srz C_p C_z F_mip F_miz F_ap F_az A_kp A_kz d_kcp d_kcz d_gkc p_hmax eta_h...
+  eta_m};
+DataMatlab2XLSt=DataMatlab2XLS';
+warning('off','MATLAB:xlswrite:Addsheet');
+xlswrite(C, DataMatlab2XLSt,...
+    'OdrPotrMomentaiSila','A1');
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Fmip_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Fmip (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+
+
+function dcpu_Callback(hObject, eventdata, handles)
+% hObject    handle to dcpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of dcpu as text
+%        str2double(get(hObject,'String')) returns contents of dcpu as a double
+
+d_kcpu= str2double(get(hObject,'String'));
+setappdata(0,'d_kcpu',d_kcpu)
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function dcpu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to dcpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function dczu_Callback(hObject, eventdata, handles)
+% hObject    handle to dczu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of dczu as text
+%        str2double(get(hObject,'String')) returns contents of dczu as a double
+
+d_kczu=str2double(get(hObject,'String'));
+setappdata(0,'d_kczu',d_kczu)
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function dczu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to dczu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function rsrpu_Callback(hObject, eventdata, handles)
+% hObject    handle to rsrpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+r_srpu=str2double(get(hObject,'String'));
+setappdata(0,'r_srpu',r_srpu)
+% Hints: get(hObject,'String') returns contents of rsrpu as text
+%        str2double(get(hObject,'String')) returns contents of rsrpu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function rsrpu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to rsrpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function rsrzu_Callback(hObject, eventdata, handles)
+% hObject    handle to rsrzu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+r_srzu=str2double(get(hObject,'String'));
+setappdata(0,'r_srzu',r_srzu)
+% Hints: get(hObject,'String') returns contents of rsrzu as text
+%        str2double(get(hObject,'String')) returns contents of rsrzu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function rsrzu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to rsrzu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function ip_Callback(hObject, eventdata, handles)
+% hObject    handle to ip (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+i_p=str2double(get(hObject,'String'));
+setappdata(0,'i_p',i_p)
+% Hints: get(hObject,'String') returns contents of ip as text
+%        str2double(get(hObject,'String')) returns contents of ip as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function ip_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to ip (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function csp_Callback(hObject, eventdata, handles)
+% hObject    handle to csp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+C_sp=str2double(get(hObject,'String'));
+setappdata(0,'C_sp',C_sp)
+% Hints: get(hObject,'String') returns contents of csp as text
+%        str2double(get(hObject,'String')) returns contents of csp as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function csp_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to csp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function cpu_Callback(hObject, eventdata, handles)
+% hObject    handle to cpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+C_pu=str2double(get(hObject,'String'));
+setappdata(0,'C_pu',C_pu)
+% Hints: get(hObject,'String') returns contents of cpu as text
+%        str2double(get(hObject,'String')) returns contents of cpu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function cpu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to cpu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function czu_Callback(hObject, eventdata, handles)
+% hObject    handle to czu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+C_zu=str2double(get(hObject,'String'));
+setappdata(0,'C_zu',C_zu)
+% Hints: get(hObject,'String') returns contents of czu as text
+%        str2double(get(hObject,'String')) returns contents of czu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function czu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to czu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function ipu_Callback(hObject, eventdata, handles)
+% hObject    handle to ipu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+i_pu=str2double(get(hObject,'String'));
+setappdata(0,'i_pu',i_pu)
+% Hints: get(hObject,'String') returns contents of ipu as text
+%        str2double(get(hObject,'String')) returns contents of ipu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function ipu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to ipu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function cspu_Callback(hObject, eventdata, handles)
+% hObject    handle to cspu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+C_spu=str2double(get(hObject,'String'));
+setappdata(0,'C_spu',C_spu)
+
+% Hints: get(hObject,'String') returns contents of cspu as text
+%        str2double(get(hObject,'String')) returns contents of cspu as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function cspu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to cspu (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function dgkc_Callback(hObject, eventdata, handles)
+% hObject    handle to dgkc (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+d_gkcu=str2double(get(hObject,'String'));
+setappdata(0,'d_gkcu',d_gkcu)
+
+% Hints: get(hObject,'String') returns contents of dgkc as text
+%        str2double(get(hObject,'String')) returns contents of dgkc as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function dgkc_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to dgkc (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function dcp_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to dcp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+
+
+function edit24_Callback(hObject, eventdata, handles)
+% hObject    handle to edit24 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit24 as text
+%        str2double(get(hObject,'String')) returns contents of edit24 as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function edit24_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit24 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+function InputOutputFinal
+%Funkcija za ispis racunskih/usvojenih vrednosti
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+
+
+il=getappdata(0,'UsvajanjeFTK');
+if il==0
+    
+i_pu=0;
+C_spu=0;
+C_pu=0;
+C_zu=0;
+d_cpu=0;
+d_czu=0;
+r_spu=0;
+r_srzu=0;
+    
+end
+i_p=getappdata(0,'i_p');
+i_pu=getappdata(0,'i_pu');
+
+
+if isempty(i_p)
+
+    setappdata(0,'i_p',i_pu)
+    
+end
+%%
+
+if i_pu>0
+        
+        setappdata(0,'i_p',i_pu)
+        
+end
+
+C_sp=getappdata(0,'C_sp');
+C_spu=getappdata(0,'C_spu');
+
+if isempty(C_sp)
+    
+    setappdata(0,'C_sp', C_spu)
+    
+    
+        
+end
+
+if C_spu>0
+    
+        setappdata(0,'C_sp', C_spu)
+        
+end
+
+
+
+C_p=getappdata(0,'C_p');
+C_pu=getappdata(0,'C_pu');
+
+if isempty(C_p)
+    
+    setappdata(0,'C_p', C_pu)
+    
+    
+end
+
+if C_pu>0
+        
+        setappdata(0,'C_p', C_pu)
+        
+end
+    
+
+
+C_z=getappdata(0,'C_z');
+C_zu=getappdata(0,'C_zu');
+
+if isempty(C_z)
+    
+    setappdata(0,'C_z', C_zu)
+    
+    
+end
+
+if C_zu>0
+        
+     setappdata(0,'C_z', C_zu)   
+    
+end
+
+
+
+d_cp=getappdata(0,'d_kcprac');
+setappdata(0,'d_cp',d_cp)
+d_cpu=getappdata(0,'d_kcpu');
+
+if isempty(d_cp)
+    
+    setappdata(0,'d_cp',d_cpu)
+    
+    
+end
+
+if d_cpu>0
+      
+        setappdata(0,'d_cp',d_cpu)
+end
+
+
+d_cz=getappdata(0,'d_kczrac');
+setappdata(0,'d_cz',d_cz)
+d_czu=getappdata(0,'d_kczu');
+
+if isempty(d_cz)
+    
+    setappdata(0,'d_cz',d_czu)
+    
+end
+
+if d_czu>0 
+    
+    setappdata(0,'d_cz',d_czu)
+    
+end
+    
+
+
+
+d_gkc=getappdata(0,'d_gkc');
+d_gkcu=getappdata(0,'d_gkcu');
+
+if isempty(d_gkc)
+    
+    setappdata(0,'d_gkc',d_gkcu)
+    
+end
+
+if d_gkcu>0
+   
+    setappdata(0,'d_gkc',d_gkcu)
+    
+end
+    
+
+r_srp=getappdata(0,'r_srp');
+r_srpu=getappdata(0,'r_srpu');
+
+if isempty(r_srp)
+    
+    setappdata(0,'r_srp', r_srpu)
+    
+end
+
+if r_srpu>0
+    
+   setappdata(0,'r_srp', r_srpu)
+   
+end
+
+
+r_srz=getappdata(0,'r_srz');
+r_srzu=getappdata(0,'r_srzu');
+
+if isempty(r_srz)
+    
+    setappdata(0,'r_srz', r_srzu)
+    
+end
+
+if r_srzu>0
+    
+    setappdata(0,'r_srz', r_srzu)
+    
+end
+
+
+
+%Podaci za beskonacnu petlju do unosa svih usvojenih podataka
+%Problem treba da prikazuje kada podaci za usvajanje nisu uneti....
+i_pu(isempty(i_pu))=0;
+C_spu(isempty(C_spu))=0;
+C_pu(isempty(C_pu))=0;
+C_pu(isempty(C_zu))=0;
+d_cpu(isempty(d_cpu))=0;
+d_czu(isempty(d_czu))=0;
+r_srpu(isempty(r_srpu))=0;
+r_srzu(isempty(r_srzu))=0;
+ bool_data=[i_pu, C_spu, C_pu, C_zu, d_cpu, d_czu, r_srpu...
+     , r_srzu];
+ bool_value=logical(bool_data);
+ 
+ if any(bool_value)==1
+     
+     bool_usv_pod=1;
+    
+ else
+     bool_usv_pod=0;
+     
+ end
+ setappdata(0,'bool_usv_pod',bool_usv_pod)
+
+##### SOURCE END #####
+--></body></html>
